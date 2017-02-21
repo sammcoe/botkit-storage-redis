@@ -42,11 +42,11 @@ function getStorageObj(client, namespace) {
             });
         },
         save: function(object, cb) {
+            console.log("Namespace in save function: " + namespace)
             if (!object.id) {
                 return cb(new Error('The given object must have an id property'), {});
             }
 
-            console.log("Namespace in save function: " + namespace)
             client.hset(namespace, object.id, JSON.stringify(object), cb);
         },
         delete: function(id, cb) {
