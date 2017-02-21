@@ -12,9 +12,11 @@ var redis = require('redis');
  */
 module.exports = function(redis_url, config) {
     config = config || {};
+    console.log("Config value: " + config)
+    console.log("Namespace before assignment: " + config.namespace)
     config.namespace = config.namesape || "botkit.store";
     config.methods = config.methods || [];
-    console.log("Namespace in save function: " + config.namespace)
+    console.log("Namespace after assignment: " + config.namespace)
 
     var storage = {},
         client = redis.createClient(redis_url, null, config), // could pass specific redis config here
