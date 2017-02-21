@@ -10,13 +10,14 @@ var redis = require('redis');
  * @property config.namespace {String} The namespace to use when storing entities. Defaults to 'botkit:store'
  * @return {Object} Storage interface for Botkit
  */
-module.exports = function(config) {
+module.exports = function(redis_url, config) {
     config = config || {};
-    config.namespace = 'botkit:store';
+    config.namespace = config.namesape || "botkit.store";
     config.methods = config.methods || [];
+    console.log("Namespace in save function: " + config.namespace)
 
     var storage = {},
-        client = redis.createClient(config), // could pass specific redis config here
+        client = redis.createClient(redis_url, null, config), // could pass specific redis config here
         methods = ['teams', 'users', 'channels'].concat(config.methods);
 
     // Implements required API methods
@@ -42,7 +43,6 @@ function getStorageObj(client, namespace) {
             });
         },
         save: function(object, cb) {
-            console.log("Namespace in save function: " + namespace)
             if (!object.id) {
                 return cb(new Error('The given object must have an id property'), {});
             }
