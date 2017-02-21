@@ -14,7 +14,7 @@ module.exports = function(redis_url, config) {
     config = config || {};
     console.log("Config value: " + config)
     console.log("Namespace before assignment: " + config.namespace)
-    config.namespace = config.namesape || "botkit.store";
+    config.namespace = config.namespace || "botkit:store";
     config.methods = config.methods || [];
     console.log("Namespace after assignment: " + config.namespace)
 
